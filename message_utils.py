@@ -30,7 +30,7 @@ def server_started(IP):
 def server_closed():
     print(colored("Game over, sending out offer requests...",S_C_FG,S_S_BG))
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # server_started("127.0.0.1")
     # start_game_message("Mor","Ohad","2+2")
     # game_over_message(4,"Instinct")
