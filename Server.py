@@ -1,6 +1,6 @@
 import socket
 import scapy.all
-from termcolor import colored, COLORS
+import message_utils
 
 UDP_DEST_PORT = 13117
 CLASS_PORT = 2063
@@ -15,8 +15,5 @@ class Server:
     def start():
 
         self.alive_status = True
+        # start_game_message("")
         
-
-# if __name__ == '__main__':
-#     print(COLORS)
-#     print(colored("hello red","green","on_grey"))
