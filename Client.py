@@ -7,30 +7,35 @@ UDP_DEST_PORT = 13117
 SERVER_PORT = 2063
 MAGIC_COOKIE = 0xabcddcba
 MESSAGE_TYPE = 0x2
-IP_ADDRESS = "127.0.0.1"
+IP_ADDRESS = "192.168.1.25"
 SERVER_IP = IP_ADDRESS
 
 class Client:
     def __init__(self):
         self.name = "einat_sarof"
 
-    def communicate_with_server():
+    def communicate_with_server(self,sock):
         print("Client started, listening for offer requests...")
-        UDP_Socket = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        UDP_Socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEPORT,1)
-        UDP_Socket.bind(('',UDP_DEST_PORT))
         message_from_server = None
         while message_from_server is None:
+            print("look for server...")
+            # print()
             try:
-                UDP_Socket.settimeout(1)
-                message_from_server = UDP_Socket.recvfrom(1024)
+                # sock.settimeout(1)
+                message_from_server = sock.recvfrom(1024)
             except:
+                print(" - didn't find - look again")
                 continue
         return message_from_server
 
-    def run_client():
+    def run_client(self):
+        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+        sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+        sock.bind(('',UDP_DEST_PORT))
         while True:
-            data,addr = communicate_with_server()
+            data,addr = self.communicate_with_server(sock)
             print (addr[0])
             break
 
+client = Client()
+client.run_client()
