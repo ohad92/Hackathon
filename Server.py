@@ -19,8 +19,8 @@ class Server:
     def start(self):
         sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
-        server.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         sock.bind((SERVER_IP, UDP_DEST_PORT))
         self.alive_status = True
         packet_msg = struct.pack("Ibh", MAGIC_COOKIE, MESSAGE_TYPE, SERVER_PORT) #I-int (4 bytes), B-byte (1 bytes), H-short (2 bytes)
