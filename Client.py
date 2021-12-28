@@ -1,5 +1,7 @@
 import time
 import socket
+from scapy.all import *
+# import message_utils as msg
 
 # dev_server_IP = get_if_addr('eth1')
 # test_server_IP = get_if_addr('eth2')
@@ -15,7 +17,7 @@ class Client:
         self.name = "einat_sarof"
 
     def communicate_with_server(self,sock):
-        print("Client started, listening for offer requests...")
+        # msg.client_started()
         message_from_server = None
         while message_from_server is None:
             print("look for server...")
@@ -28,14 +30,24 @@ class Client:
                 continue
         return message_from_server
 
-    def run_client(self):
-        sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-        sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
-        sock.bind(('',UDP_DEST_PORT))
+    def run(self):
         while True:
-            data,addr = self.communicate_with_server(sock)
-            print (addr[0])
-            break
+            print("back")
+            sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+            sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+            sock.bind(('',UDP_DEST_PORT))
+            message_from_server = None
+            while message_from_server is None:
+                data,addr = sock.recvfrom(1024)
+                try:
+                    # sock.settimeout(1)
+                    data = struct.unpack("Ibh",data)
+                    message_from_server = data
+                    print(message_from_server)
+                    break
+                except:
+                    print(" - didn't find - look again")
+                    continue
 
 client = Client()
-client.run_client()
+client.run()
