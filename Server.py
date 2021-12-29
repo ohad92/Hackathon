@@ -1,6 +1,6 @@
 import socket
 from scapy.all import *
-# import message_utils as msg
+import message_utils as msg
 
 dev_server_IP = get_if_addr('eth1')
 test_server_IP = get_if_addr('eth2')
@@ -29,7 +29,7 @@ class Server:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         sock.bind((dev_server_IP, UDP_DEST_PORT))
         packet_msg = struct.pack("Ibh", MAGIC_COOKIE, MESSAGE_TYPE, SERVER_PORT) #I-int (4 bytes), B-byte (1 bytes), H-short (2 bytes)
-        # msg.server_started(SERVER_IP)
+        msg.server_started(dev_server_IP)
         while True:
             sock.sendto(packet_msg, ("<broadcast>", UDP_DEST_PORT))
             time.sleep(1)
