@@ -35,8 +35,15 @@ def server_closed():
     return message
 
 def client_started():
-    message = colored("Client started, listening for offer requests...")
+    message = colored("Client started, listening for offer requests...",S_C_FG)
     return message
+
+def client_trying_connect(IP):
+    message = colored("Received offer from ", S_S_FG, S_S_BG)
+    message += colored(IP, S_G_FG_NAMES, S_S_BG)
+    message += colored(", attempting to connect...", S_S_FG, S_S_BG)
+    return message
+
 # if __name__ == '__main__':
     # server_started("127.0.0.1")
     # start_game_message("Mor","Ohad","2+2")
